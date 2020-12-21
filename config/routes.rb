@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   get 'sessions/new'
-  resources :users
+  get '/pictures', to: 'pictures#index'
+  # resources :users
   resources :pictures
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :users
+  resources :sessions, only: [:new, :create, :destroy]
+  # resources :pictures do
+  #   collection do
+  #     post :confirm
+  #   end
+  # end
 end
