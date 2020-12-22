@@ -3,33 +3,39 @@ class PicturesController < ApplicationController
   def index
     @pictures = Picture.all
   end
+
   def new
     @picture = current_user.pictures.build
   end
+
   def show
   end
+
   def edit
   end
+
   def create
     @picture = current_user.pictures.build(picture_params)
-    respond_to do |format|
+    if params[:back]
+      render :new
+    else
       if @picture.save
-        format.html { redirect_to @picture, notice: '投稿しました！' }
-        format.json { render :show, status: :created, location: @picture }
+        redirect_to pictures_path, notice: "投稿しました！"
       else
-        format.html { render :new }
-        format.json { render json: @picture.errors, status: :unprocessable_entity }
+        render :new
       end
     end
   end
+
   def confirm
     @picture = current_user.pictures.build(picture_params)
     render :new if @picture.invalid?
   end
+  
   def update
     respond_to do |format|
       if @picture.update(picture_params)
-        format.html { redirect_to @picture, notice: 'ブログを編集しました！.' }
+        format.html { redirect_to pictures_path, notice: 'ブログを編集しました！.' }
         format.json { render :show, status: :ok, location: @picture }
       else
         format.html { render :edit }
