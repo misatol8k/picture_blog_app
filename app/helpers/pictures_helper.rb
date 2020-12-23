@@ -3,7 +3,8 @@ module PicturesHelper
     if action_name == 'new' || action_name == 'create'
       confirm_pictures_path
     elsif action_name == 'edit'
-      pictures_path
+      # binding.irb
+      picture_path
     end
   end
 end
