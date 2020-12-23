@@ -31,16 +31,13 @@ class PicturesController < ApplicationController
     @picture = current_user.pictures.build(picture_params)
     render :new if @picture.invalid?
   end
-  
+
   def update
-    respond_to do |format|
-      if @picture.update(picture_params)
-        format.html { redirect_to pictures_path, notice: 'ブログを編集しました！.' }
-        format.json { render :show, status: :ok, location: @picture }
-      else
-        format.html { render :edit }
-        format.json { render json: @picture.errors, status: :unprocessable_entity }
-      end
+    @picture = current_user.pictures.build(picture_params)
+    if @picture.update(picture_params)
+      redirect_to pictures_path, notice: "更新しました！"
+    else
+      render :edit
     end
   end
 
